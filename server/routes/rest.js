@@ -25,13 +25,18 @@ router.get('/identify', (req, res) => {
     if (nfcId) {
         let today = new Date();
         today = 't_' + getFormatDate(today);
-        connection.query(`SELECT name, ${today} FROM tblTemp where nfcId=?`, [nfcId], (err, result) => {
+        connection.query(`SELECT name, ${today} FROM tblTemp where nfcId=?`, [nfcId], (err, queryResult) => {
             if (err) {
                 console.log(err);
-                res.json({ result: false });
+                res.json({ result: false, name: false });
+            } else if (queryResult.length > 0) {
+                let temperature = null;
+                if (queryResult[0][`${today}`]) {
+                    temperature = queryResult[0][`${today}`];
+                }
+                res.json({ result: true, name: queryResult[0].name, temperature: temperature });
             } else {
-                const temperature = result[0][`${today}`];
-                res.json({ result: true, name: result[0].name, temperature: temperature });
+                res.json({ result: false, name: null });
             }
         });
     } else {
