@@ -84,6 +84,24 @@ router.get('/addUser', (req, res) => {
     }
 });
 
+/*delete user */
+router.get('/deleteUser', (req, res)=>{
+    let nfcId = req.query.nfcId;
+    if(nfcId){
+        connection.query('DELETE FROM tblTemp where nfcId=?', [nfcId], (err)=>{
+            if(err){
+                console.log(err);
+                res.json({result:false});
+            }
+            else{
+                res.json({result:true})
+            }
+        })
+    }else{
+        res.json({result:false})
+    }
+})
+
 /* alter table add year date as column */
 router.get('/addYear', (req, res) => {
     let query = `alter table tblTemp add( `;
