@@ -68,10 +68,9 @@ router.get('/addTempData', (req, res) => {
 router.get('/addUser', (req, res) => {
     let nfcId = req.query.nfcId;
     let name = req.query.name;
-    console.log(nfcId);
-    console.log(name);
+    let belong = req.query.belong;
     if (nfcId && name) {
-        connection.query(`INSERT INTO tblTemp (name, nfcId) VALUES (?,?)`, [name, nfcId], (err) => {
+        connection.query(`INSERT INTO tblTemp (name, nfcId, belong) VALUES (?,?,?)`, [name, nfcId, belong], (err) => {
             if (err) {
                 console.log(err);
                 res.json({ result: false });
@@ -99,21 +98,27 @@ router.get('/userInfoWithoutTemp', (req, res)=>{
 });
 
 /*delete user */
-router.get('/deleteUser', (req, res)=>{
-    let nfcId = req.query.nfcId;
-    if(nfcId){
-        connection.query('DELETE FROM tblTemp where nfcId=?', [nfcId], (err)=>{
-            if(err){
-                console.log(err);
-                res.json({result:false});
-            }
-            else{
-                res.json({result:true})
-            }
-        })
-    }else{
-        res.json({result:false})
+router.post('/deleteUser', (req, res)=>{
+    console.log(req.body.target);
+    let query = 'DELETE FROM tblTemp where ';
+    let params = [];
+    let size = req.body.target.length;
+
+    for(let i=1;i<size;++i){
+        query += ' nfcId=? '
+        params.push(req.body.target[i])
+        if(i != size-1){
+            query += ' or '
+        }
     }
+    connection.query(query, params, (err)=>{
+        if(err){
+            console.log(err);
+            res.json({result:false})
+        }else{
+            res.json({result:true})
+        }
+    })
 })
 
 /* alter table add year date as column */
