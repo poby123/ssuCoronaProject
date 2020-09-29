@@ -84,6 +84,20 @@ router.get('/addUser', (req, res) => {
     }
 });
 
+/*get userInfo excepting temperature data */
+router.get('/userInfoWithoutTemp', (req, res)=>{
+    connection.query('SELECT name, nfcid, belong FROM tbltemp', (err, result)=>{
+        if(err){
+            console.log(err);
+            res.json({result:false})
+        }
+        else{
+            console.log(result);
+            res.json({result:true, content:result})
+        }
+    })
+});
+
 /*delete user */
 router.get('/deleteUser', (req, res)=>{
     let nfcId = req.query.nfcId;
