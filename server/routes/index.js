@@ -11,14 +11,7 @@ router.use(session(sessionAuth));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  connection.query(`SELECT * FROM tblTemp`, (err, result)=>{
-    if(err){
-      console.log(err);
-    }else{
-      console.log(result);
-      res.render('index', { title: 'Express' });
-    }
-  })
+  res.render('index', { title: 'SSU Corona Project' });
 });
 
 module.exports = router;

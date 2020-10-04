@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2&family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <header>
+      <div class="container">
+        <span><a id="title" href="/"><%=title%></a></span>
+      </div>
+    </header>
+    <section>
+      <div>
+        <h4>오늘의 체온이 높게 나온사람</h4>
+        <table>
+          <tr>
+            <th>이름</th>
+            <th>소속</th>
+            <th>체온</th>
+          </tr>
+          <tr>
+            <td>홍길동</td>
+            <td>숭실대학교 1학년</td>
+            <td>36.5</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/02656a2617.js"></script>
   </body>
 </html>
