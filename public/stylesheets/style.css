@@ -8,13 +8,31 @@ body{
 
 a{
   text-decoration: none;
+  display: inline-block;
 }
 
-header{
-  border-bottom: 1px solid blue;
-  font-size : 25px;
-  padding: 0.5em 1em;
+button{
+  background: none;
+  border: none;
+}
+
+table, tr, td, th{
+  border : 1px solid red;
+}
+
+li{
+  list-style: none;
+}
+/*header*/
+#title{
+  color : var(--main-color);
   font-family: 'Baloo Da 2', cursive;
+  font-size : 25px;
+}
+header{
+  max-height: 10vh;
+  border-bottom: 1px solid blue;
+  padding: 0.5em 1em;
   font-weight: bold;
 }
 header .container{
@@ -22,13 +40,64 @@ header .container{
   margin-left : auto;
   margin-right : auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
-#title{
-  color : var(--main-color);
+header .menu-bar button{
+  color: var(--main-color);
+  font-size: 25px;
+}
+header .menu-bar button:hover{
+  cursor: pointer;
+}
+@media(max-width:768px){
+  #title{
+    font-size:20px;
+  }
+}
+/*nav menu*/
+.menu-buttons{
+  position: fixed;
+  right: 0;
+  width: 50vw;
+  height: 90vh;
+  border : 1px solid red;
+  display: none;
+  background: white;
+  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content:flex-start;
 }
 
-table, tr, td, th{
-  border : 1px solid red;
+.menu-buttons ul{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.menu-buttons li{
+  font-size: 17px;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  line-height: 2em;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid blue;
+}
+
+.menu-buttons a{
+  color: var(--main-color);
+}
+
+/*secion A*/
+.sectionA{
+  border : 1px solid blue;
+  display: flex;
+}
+
+.sectionA .container{
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
