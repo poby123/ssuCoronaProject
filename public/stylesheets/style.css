@@ -15,10 +15,13 @@ button{
   background: none;
   border: none;
 }
-
-table, tr, td, th{
-  border : 1px solid red;
+button:hover{
+  cursor: pointer;
 }
+
+/* table, tr, td, th{
+  border : 1px solid red;
+} */
 
 li{
   list-style: none;
@@ -92,12 +95,50 @@ header .menu-bar button:hover{
 
 /*secion A*/
 .sectionA{
-  border : 1px solid blue;
-  display: flex;
+  /* border : 1px solid blue; */
+  min-height: 90vh;
 }
 
 .sectionA .container{
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.sectionA .container .small-container{
+  width: 80%;
+  margin:auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sectionA #edit-button{
+  font-size: 25px;
+  color: var(--main-color);
+}
+
+table{
+  width: 100%;
+  text-align: center;
+}
+tr,th, td{
+  border: 1px solid var(--main-color);
+}
+/*section-status*/
+.section-status{
+  border-radius: 10px;
+  width: 300px;
+  height: 100px;
+  position: fixed;
+  right:0;
+  bottom:0;
+  background: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#status-label{
+  font-family: 'Nanum Gothic', sans-serif;
+  color: white;
 }

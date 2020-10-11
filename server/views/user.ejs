@@ -1,0 +1,57 @@
+<%-include('./partials/header.ejs')%>
+    <section class="sectionA">
+      <div class="container">
+        <div class="small-container">
+          <h3>사용자 명단</h3>
+          <button id="edit-button"><i class="far fa-edit"></i></button>
+        </div>
+        <table id="userTable">
+          <tr>
+            <th>이름</th>
+            <th>NFC 카드번호</th>
+            <th>소속</th>
+          </tr>
+        </table>
+      </div>
+    </section>
+<%-include('./partials/tail.ejs')%>
+<script>
+    let label = document.getElementById('status-label');
+    label.innerHTML = '데이터를 가져오고 있습니다.';
+    $.ajax({
+        url:'/rest/userInfoWithoutTemp',
+        type: 'GET',
+        dataType: 'json',
+        success: (result)=>{
+            if(result.result){
+                let table = document.getElementById('userTable');
+                result.content.forEach(element => {
+                    let row = table.insertRow(1);
+                    let cell1 = row.insertCell(0);
+                    let cell2 = row.insertCell(1);
+                    let cell3 = row.insertCell(2);
+                    cell1.innerHTML = element['name'];
+                    cell2.innerHTML = element['nfcid'];
+                    cell3.innerHTML = element['belong'];
+                });
+                label.innerHTML = '데이터를 가져왔습니다';
+            }else{
+                label.innerHTML = '데이터를 가져오는 동안 오류가 발생했습니다...';
+                console.log('error is occured');
+            }
+        },
+    })
+
+    /*edit button*/
+    let edit_button_state = false;
+    $('#edit-button').click(()=>{
+      edit_button = !edit_button_state;
+      
+    
+
+      $('#edit-button i').toggleClass('far')
+      $('#edit-button i').toggleClass('fas')
+    })
+</script>
+</body>
+</html>
