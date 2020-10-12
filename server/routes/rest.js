@@ -102,6 +102,7 @@ router.post('/deleteUser', (req, res)=>{
     console.log(req.body.target);
     let query = 'DELETE FROM tblTemp where ';
     let params = [];
+    req.body.target = [0,...req.body.target];
     let size = req.body.target.length;
 
     for(let i=1;i<size;++i){
