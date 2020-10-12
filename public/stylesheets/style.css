@@ -19,10 +19,6 @@ button:hover{
   cursor: pointer;
 }
 
-/* table, tr, td, th{
-  border : 1px solid red;
-} */
-
 li{
   list-style: none;
 }
@@ -53,11 +49,7 @@ header .menu-bar button{
 header .menu-bar button:hover{
   cursor: pointer;
 }
-@media(max-width:768px){
-  #title{
-    font-size:20px;
-  }
-}
+
 /*nav menu*/
 .menu-buttons{
   position: fixed;
@@ -95,34 +87,71 @@ header .menu-bar button:hover{
 
 /*secion A*/
 .sectionA{
-  /* border : 1px solid blue; */
+  margin-top: 20px;
   min-height: 90vh;
+  font-family: 'Nanum Gothic', sans-serif;
+  line-height: 1.5rem;
 }
 
 .sectionA .container{
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+.sectionA .container .editor{
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.sectionA .container .delete-checkbox{
+  width: 20px;
+  height: 20px;
+}
+
+.sectionA .container #delete-button{
+  margin-top: 10px;
+  background: var(--main-color);
+  font-size: 15px;
+  color: white;
+  width:100px;
+  line-height: 2em;
+}
+
+.sectionA .container #add-button{
+  margin-top: 10px;
+  font-size: 20px;
+}
+/*sectionA .small-container*/
 .sectionA .container .small-container{
-  width: 80%;
-  margin:auto;
   display: flex;
+  max-width: inherit;
+  width: 80vw;
+  flex-direction: row;
   justify-content: space-between;
 }
-
-.sectionA #edit-button{
+.sectionA .container .small-container #sub-title{
+  font-size: inherit;
+}
+.sectionA .container .small-container #edit-button{
   font-size: 25px;
-  color: var(--main-color);
 }
 
-table{
+
+#user-table{
+  font-size: 15px;
   width: 100%;
   text-align: center;
-}
-tr,th, td{
   border: 1px solid var(--main-color);
+}
+#user-table th{
+  background-color: var(--main-color);
+  color:white;
 }
 /*section-status*/
 .section-status{
@@ -141,4 +170,24 @@ tr,th, td{
 #status-label{
   font-family: 'Nanum Gothic', sans-serif;
   color: white;
+}
+
+@media(max-width:768px){
+  .section-status{
+    width: 50vw;
+  }
+  .sectionA .container{
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #title{
+    font-size:20px;
+  }
+  #user-table{
+    font-size: 12px;
+  }
+  .sectionA .container .small-container #edit-button{
+    font-size: 20px;
+  }
 }

@@ -2,16 +2,19 @@
     <section class="sectionA">
       <div class="container">
         <div class="small-container">
-          <h3>사용자 명단</h3>
+          <h3 id="sub-title"><i class="fas fa-list"></i> &nbsp사용자 정보</h3>
           <button id="edit-button"><i class="far fa-edit"></i></button>
         </div>
-        <table id="userTable">
+        <table id="user-table">
           <tr>
             <th>이름</th>
             <th>NFC 카드번호</th>
             <th>소속</th>
+            <th class="editor">-</th>
           </tr>
         </table>
+        <button class="editor" id="delete-button">삭제</button>
+        <!-- <button class="editor" id="add-button"><i class="fas fa-user-plus"></i></button> -->
       </div>
     </section>
 <%-include('./partials/tail.ejs')%>
@@ -24,16 +27,22 @@
         dataType: 'json',
         success: (result)=>{
             if(result.result){
-                let table = document.getElementById('userTable');
+                let table = document.getElementById('user-table');
+                let len = result.content.length;
+                /*draw table*/
                 result.content.forEach(element => {
                     let row = table.insertRow(1);
                     let cell1 = row.insertCell(0);
                     let cell2 = row.insertCell(1);
                     let cell3 = row.insertCell(2);
+                    let cell4 = row.insertCell(3)
                     cell1.innerHTML = element['name'];
                     cell2.innerHTML = element['nfcid'];
                     cell3.innerHTML = element['belong'];
+                    cell4.className = 'editor';
+                    cell4.innerHTML = `<input type='checkbox' class='delete-checkbox' id='${element['nfcid']}'>`;
                 });
+                /*set status*/
                 label.innerHTML = '데이터를 가져왔습니다';
             }else{
                 label.innerHTML = '데이터를 가져오는 동안 오류가 발생했습니다...';
@@ -45,13 +54,45 @@
     /*edit button*/
     let edit_button_state = false;
     $('#edit-button').click(()=>{
-      edit_button = !edit_button_state;
-      
-    
+      edit_button_state = !edit_button_state;
+      if(edit_button_state){
+        $('.sectionA .container .editor').css('display', 'flex');
+      }else{
+        $('.sectionA .container .editor').css('display', 'none');
+      }
 
       $('#edit-button i').toggleClass('far')
       $('#edit-button i').toggleClass('fas')
     })
+
+    /*delete-button*/
+    $('#delete-button').click(()=>{
+      let checkbox_list = $('.delete-checkbox')
+      let target = []
+
+      for(let i=0;i<checkbox_list.length;++i){;
+        if(checkbox_list[i].checked){
+          target.push(checkbox_list[i].id)
+        }
+      }
+      target = {'target':target} //convert array to object
+      $.ajax({
+        type: 'POST',
+        url:'/rest/deleteUser',
+        contentType:'application/json',
+        data: JSON.stringify(target),
+        dataType: 'json',
+        success: (result)=>{
+          if(result.result){
+            alert('성공적으로 삭제했습니다.');
+            location.reload();
+          }
+          else{
+            label.innerHTML = '삭제 중 오류가 발생했습니다.';
+          }
+        }
+      });
+    });
 </script>
 </body>
 </html>
