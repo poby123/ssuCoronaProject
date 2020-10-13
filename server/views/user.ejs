@@ -78,7 +78,7 @@
     /*add-button => add field at table*/
     let add_num = 0;
     $('#add-button').click(()=>{
-      if($(`#name${add_num-1}`).val() != '' && $(`#nfcid${add_num-1}`).val() != ''){
+      if($(`#name${add_num-1}`).val() != '' && $(`#nfcid${add_num-1}`).val() != '' && !edit_button_state){
         let table = document.getElementById('user-table');
         let row = table.insertRow(2+add_num);
         row.className = 'editor-field';
