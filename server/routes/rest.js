@@ -65,23 +65,6 @@ router.get('/addTempData', (req, res) => {
 });
 
 /* add user information */
-router.get('/addUser', (req, res) => {
-    let nfcId = req.query.nfcId;
-    let name = req.query.name;
-    let belong = req.query.belong;
-    if (nfcId && name) {
-        connection.query(`INSERT INTO tblTemp (name, nfcId, belong) VALUES (?,?,?)`, [name, nfcId, belong], (err) => {
-            if (err) {
-                console.log(err);
-                res.json({ result: false });
-            } else {
-                res.json({ result: true });
-            }
-        });
-    } else {
-        res.json({ result: false });
-    }
-});
 router.post('/addUser', (req, res) => {
     let target = req.body.target;
     if(target){
