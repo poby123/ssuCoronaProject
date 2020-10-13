@@ -97,6 +97,7 @@ router.post('/addUser', (req, res) => {
     query = query.substring(0, query.length-1);
     connection.query(query, params, (err)=>{
         if(err){
+            console.log(err);
             res.json({result:false})
         }else{
             res.json({result:true});
