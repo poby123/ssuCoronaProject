@@ -108,19 +108,28 @@ header .menu-bar button:hover{
   justify-content: center;
   display: none;
 }
+.sectionA .container .editor-converse{
+  align-items: center;
+  justify-content: center;
+}
 
 .sectionA .container .delete-checkbox{
   width: 20px;
   height: 20px;
 }
 
-.sectionA .container #delete-button{
+.sectionA .container #delete-button, 
+.sectionA .container #save-button{
   margin-top: 10px;
   background: var(--main-color);
   font-size: 15px;
   color: white;
   width:100px;
   line-height: 2em;
+}
+
+.sectionA .container .name_field, .nfcid_field, .belong_field{
+  max-width:60px; 
 }
 
 .sectionA .container #add-button{

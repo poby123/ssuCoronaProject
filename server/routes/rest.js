@@ -82,6 +82,29 @@ router.get('/addUser', (req, res) => {
         res.json({ result: false });
     }
 });
+router.post('/addUser', (req, res) => {
+    let target = req.body.target;
+    let query = 'INSERT INTO tblTemp (name, nfcId, belong) VALUES ';
+    let params = [];
+    target.forEach(element => {
+        if(element['name'] != '' && element['nfcId'] != ''){
+            params.push(element['name']);
+            params.push(element['nfcId']);
+            params.push(element['belong']);
+            query += '(?,?,?),';
+        }
+    });
+    query = query.substring(0, query.length-1);
+    connection.query(query, params, (err)=>{
+        if(err){
+            res.json({result:false})
+        }else{
+            res.json({result:true});
+        }
+    });
+    
+});
+
 
 /*get userInfo excepting temperature data */
 router.get('/userInfoWithoutTemp', (req, res)=>{
