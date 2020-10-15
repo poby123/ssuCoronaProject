@@ -31,6 +31,9 @@
     let row = table.insertRow(-1);
     header_list.forEach(element=>{
       let headerCell = document.createElement("th");
+      if(element == "이름" || element == "소속"){
+        headerCell.className = "th-long-width";
+      }
       headerCell.innerHTML = element;
       row.appendChild(headerCell);
     })
@@ -71,7 +74,6 @@
                 })
             }else{
                 alert('데이터를 가져오는 동안 오류가 발생했습니다...');
-
             }
         },
     })

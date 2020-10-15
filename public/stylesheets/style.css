@@ -219,6 +219,9 @@ header .menu-bar button:hover{
     display: flex;
     overflow: scroll;
   }
+  #user-temp-table .th-long-width{
+    min-width: 120px;
+  }
   .sectionA .container .small-container #edit-button{
     font-size: 20px;
   }
