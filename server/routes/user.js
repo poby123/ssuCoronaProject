@@ -14,4 +14,8 @@ router.get('/', function(req, res) {
     res.render('user', { title: 'SSU Corona Project' });
 });
 
+router.get('/temp', (req, res)=>{
+    res.render('user_temp', { title: 'SSU Corona Project' });
+});
+
 module.exports = router;

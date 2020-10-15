@@ -96,6 +96,17 @@ router.post('/addUser', (req, res) => {
     }
 });
 
+router.get('/userInfo', (req, res)=>{
+    connection.query('SELECT * FROM tbltemp', (err, result)=>{
+        if(err){
+            console.log(err);
+            res.json({result:false})
+        }
+        else{
+            res.json({result:true, content:result})
+        }
+    })
+});
 
 /*get userInfo excepting temperature data */
 router.get('/userInfoWithoutTemp', (req, res)=>{

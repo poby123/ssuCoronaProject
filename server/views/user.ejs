@@ -22,7 +22,6 @@
     </section>
 <%-include('./partials/tail.ejs')%>
 <script>
-
     /*get data*/
     $.ajax({
         url:'/rest/userInfoWithoutTemp',
@@ -52,7 +51,6 @@
             }
         },
     })
-
     /*edit button*/
     let edit_button_state = false;
     $('#edit-button').click(()=>{
@@ -67,11 +65,9 @@
         $('.sectionA .container .editor-field').css('visibility', 'visible');
         
       }
-
       $('#edit-button i').toggleClass('fa-minus')
       $('#edit-button i').toggleClass('fa-plus')
     });
-
     /*add-button => add field at table*/
     let add_num = 0;
     $('#add-button').click(()=>{
@@ -88,7 +84,6 @@
         ++add_num;
       }
     });
-
     /*save-button*/
     $('#save-button').click(()=>{
       let names = $('.name_field');
@@ -122,12 +117,10 @@
         }
       });
     });
-
     /*delete-button*/
     $('#delete-button').click(()=>{
       let checkbox_list = $('.delete-checkbox')
       let target = []
-
       for(let i=0;i<checkbox_list.length;++i){;
         if(checkbox_list[i].checked){
           target.push(checkbox_list[i].id)

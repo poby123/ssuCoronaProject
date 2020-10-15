@@ -1,5 +1,6 @@
 :root{
   --main-color : rgb(54, 81, 235);
+  --warning-color: rgb(255, 0, 106);
 }
 
 body{
@@ -57,6 +58,7 @@ header .menu-bar button:hover{
   width: 50vw;
   height: 90vh;
   border : 2px solid var(--main-color);
+  border-top : none;
   display: none;
   background: white;
   padding: 0;
@@ -164,6 +166,21 @@ header .menu-bar button:hover{
   color:white;
 }
 
+/*user-temp-table*/
+#user-temp-table{
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--main-color);
+}
+#user-temp-table th{
+  background-color: var(--main-color);
+  color:white;
+}
+#user-temp-table .high-temp{
+  color: white;
+  background: var(--warning-color);
+}
 /*section-status*/
 /* .section-status{
   border-radius: 10px;
@@ -197,6 +214,10 @@ header .menu-bar button:hover{
   }
   #user-table{
     font-size: 12px;
+  }
+  #user-temp-table{
+    display: flex;
+    overflow: scroll;
   }
   .sectionA .container .small-container #edit-button{
     font-size: 20px;
