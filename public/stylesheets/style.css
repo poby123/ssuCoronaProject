@@ -56,7 +56,7 @@ header .menu-bar button:hover{
   right: 0;
   width: 50vw;
   height: 90vh;
-  border : 1px solid red;
+  border : 2px solid var(--main-color);
   display: none;
   background: white;
   padding: 0;
@@ -136,6 +136,7 @@ header .menu-bar button:hover{
   margin-top: 10px;
   font-size: 20px;
 }
+
 /*sectionA .small-container*/
 .sectionA .container .small-container{
   display: flex;
@@ -151,7 +152,7 @@ header .menu-bar button:hover{
   font-size: 25px;
 }
 
-
+/*user table*/
 #user-table{
   font-size: 15px;
   width: 100%;
@@ -162,8 +163,9 @@ header .menu-bar button:hover{
   background-color: var(--main-color);
   color:white;
 }
+
 /*section-status*/
-.section-status{
+/* .section-status{
   border-radius: 10px;
   width: 300px;
   height: 100px;
@@ -179,12 +181,12 @@ header .menu-bar button:hover{
 #status-label{
   font-family: 'Nanum Gothic', sans-serif;
   color: white;
-}
+} */
 
 @media(max-width:768px){
-  .section-status{
+  /* .section-status{
     width: 50vw;
-  }
+  } */
   .sectionA .container{
     max-width: 90vw;
     margin-left: auto;

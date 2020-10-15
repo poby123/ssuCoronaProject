@@ -22,9 +22,7 @@
     </section>
 <%-include('./partials/tail.ejs')%>
 <script>
-    let label = document.getElementById('status-label');
-    let len = 0;
-    label.innerHTML = '데이터를 가져오고 있습니다.';
+
     /*get data*/
     $.ajax({
         url:'/rest/userInfoWithoutTemp',
@@ -33,7 +31,6 @@
         success: (result)=>{
             if(result.result){
                 let table = document.getElementById('user-table');
-                len = result.content.length;
                 /*draw table*/
                 result.content.forEach(element => {
                     let row = table.insertRow(2);
@@ -48,10 +45,10 @@
                     cell4.innerHTML = `<input type='checkbox' class='delete-checkbox' id='${element['nfcid']}'>`;
                 });
                 /*set status*/
-                label.innerHTML = '데이터를 가져왔습니다';
+                // label.innerHTML = '데이터를 가져왔습니다';
             }else{
-                label.innerHTML = '데이터를 가져오는 동안 오류가 발생했습니다...';
-                console.log('error is occured');
+                // label.innerHTML = '데이터를 가져오는 동안 오류가 발생했습니다...';
+                alert('데이터를 가져오는 동안 오류가 발생했습니다...');
             }
         },
     })
@@ -119,7 +116,8 @@
             location.reload();
           }
           else{
-            label.innerHTML = '추가 중 오류가 발생했습니다.';
+            // label.innerHTML = '추가 중 오류가 발생했습니다.';
+            alert('추가 중 오류가 발생했습니다.');
           }
         }
       });
@@ -151,7 +149,8 @@
             location.reload();
           }
           else{
-            label.innerHTML = '삭제 중 오류가 발생했습니다.';
+            // label.innerHTML = '삭제 중 오류가 발생했습니다.';
+            alert('삭제 중 오류가 발생했습니다.');
           }
         }
       });
