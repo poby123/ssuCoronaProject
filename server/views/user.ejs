@@ -7,6 +7,7 @@
         </div>
         <table id="user-table">
           <tr>
+            <th>학번/아이디</th>
             <th>이름</th>
             <th>NFC 카드번호</th>
             <th>소속</th>
@@ -33,10 +34,12 @@
                 /*draw table*/
                 result.content.forEach(element => {
                     let row = table.insertRow(2);
-                    let cell1 = row.insertCell(0);
-                    let cell2 = row.insertCell(1);
-                    let cell3 = row.insertCell(2);
-                    let cell4 = row.insertCell(3)
+                    let cell0 = row.insertCell(0);
+                    let cell1 = row.insertCell(1);
+                    let cell2 = row.insertCell(2);
+                    let cell3 = row.insertCell(3);
+                    let cell4 = row.insertCell(4);
+                    cell0.innerHTML = element['id'];
                     cell1.innerHTML = element['name'];
                     cell2.innerHTML = element['nfcid'];
                     cell3.innerHTML = element['belong'];
@@ -75,9 +78,11 @@
         let table = document.getElementById('user-table');
         let row = table.insertRow(2+add_num);
         row.className = 'editor-field';
-        let cell1 = row.insertCell(0);
-        let cell2 = row.insertCell(1);
-        let cell3 = row.insertCell(2);
+        let cell0 = row.insertCell(-1);
+        let cell1 = row.insertCell(-1);
+        let cell2 = row.insertCell(-1);
+        let cell3 = row.insertCell(-1);
+        cell0.innerHTML = `<input type='text' class='id_field' id='name${add_num}' placeholder="학번/아이디">`;
         cell1.innerHTML = `<input type='text' class='name_field' id='name${add_num}' placeholder="이름">`;
         cell2.innerHTML = `<input type='text' class='nfcid_field' id='nfcid${add_num}' placeholder="NFC">`;
         cell3.innerHTML = `<input type='text' class='belong_field' id='belong${add_num}'placeholder="소속">`;
@@ -86,13 +91,14 @@
     });
     /*save-button*/
     $('#save-button').click(()=>{
+      let ids = $('.id_field');
       let names = $('.name_field');
       let nfcids = $('.nfcid_field');
       let belongs = $('.belong_field');
       let target = [];
       for(let i=0;i<add_num;++i){
         if(names[i].value != '' && names[i].value != ''){
-          target.push({'name':names[i].value, 'nfcId':nfcids[i].value, 'belong':belongs[i].value})
+          target.push({'id':ids[i].value,'name':names[i].value, 'nfcId':nfcids[i].value, 'belong':belongs[i].value})
         }
       }
       if(target.length == 0){

@@ -214,6 +214,8 @@ header .menu-bar button:hover{
   }
   #user-table{
     font-size: 12px;
+    display: flex;
+    overflow: scroll;
   }
   #user-temp-table{
     display: flex;

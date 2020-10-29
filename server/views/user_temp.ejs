@@ -12,7 +12,7 @@
 <script>
 
     let date = new Date();
-    let header_list = ["이름", "소속"];
+    let header_list = ["학번/아이디","이름", "소속"];
     let date_list = [];
     let temp_data;
     let table = document.getElementById('user-temp-table');
@@ -31,7 +31,7 @@
     let row = table.insertRow(-1);
     header_list.forEach(element=>{
       let headerCell = document.createElement("th");
-      if(element == "이름" || element == "소속"){
+      if(element == "학번/아이디" || element == "이름" || element == "소속"){
         headerCell.className = "th-long-width";
       }
       headerCell.innerHTML = element;
@@ -49,6 +49,9 @@
                 temp_data.forEach(element =>{
                   let user_flag = false;
                   let row = table.insertRow(-1);
+
+                  let id_cell = row.insertCell(-1);
+                  id_cell.innerHTML = element['id'];
 
                   let name_cell = row.insertCell(-1);
                   name_cell.innerHTML = element['NAME'];

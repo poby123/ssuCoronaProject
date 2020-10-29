@@ -72,17 +72,18 @@ router.post('/addUser', (req, res) => {
             target = Array(target);
         }
         console.log('/addUser target: ', target);
-        let query = 'INSERT INTO tblTemp (name, nfcId, belong) VALUES ';
+        let query = 'INSERT INTO tblTemp (name, nfcId, belong,id) VALUES ';
         let params = [];
         target.forEach(element => {
             if(element['name'] != '' && element['nfcId'] != ''){
                 params.push(element['name']);
                 params.push(element['nfcId']);
                 params.push(element['belong']);
-                query += '(?,?,?),';
+                params.push(element['id']);
+                query += '(?,?,?,?),';
             }
         });
-        query = query.substring(0, query.length-1);
+        query = query.substring(0, query.length-1); //delete last , character
         connection.query(query, params, (err)=>{
             if(err){
                 console.log(err);
@@ -110,7 +111,7 @@ router.get('/userInfo', (req, res)=>{
 
 /*get userInfo excepting temperature data */
 router.get('/userInfoWithoutTemp', (req, res)=>{
-    let query = 'SELECT name, nfcid, belong FROM tbltemp';
+    let query = 'SELECT name, nfcid, belong, id FROM tbltemp';
     connection.query(query, (err, result)=>{
         if(err){
             console.log(err);
