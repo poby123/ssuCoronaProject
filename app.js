@@ -18,7 +18,7 @@ app.set("view engine", "ejs");
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
-            "default-src": ["'self' 'unsafe-inline'"],
+            "default-src": ["'self'"],
             "connect-src": [
                 "'self'",
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/free-v4-font-face.min.css 'unsafe-inline'",
@@ -26,9 +26,9 @@ app.use(
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/free-v4-shims.min.css 'unsafe-inline'",
             ],
             "script-src": [
-                "'self'",
+                "'self' 'unsafe-inline'",
                 "https://code.jquery.com/jquery-3.5.1.min.js",
-                "https://kit.fontawesome.com/02656a2617.js 'unsafe-inline'",
+                "https://kit.fontawesome.com/02656a2617.js",
             ],
             "font-src": [
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/ 'unsafe-inline'",
