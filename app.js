@@ -8,6 +8,7 @@ var helmet = require("helmet");
 var indexRouter = require("./server/routes/index");
 var userRouter = require("./server/routes/user");
 var restRouter = require("./server/routes/rest");
+var authRouter = require("./server/routes/auth");
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/rest", restRouter);
+app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

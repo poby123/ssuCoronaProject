@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const mysql = require("mysql");
 const session = require("express-session");
 const router = express.Router();
@@ -10,8 +10,12 @@ const connection = mysql.createPool(dbConfig);
 router.use(session(sessionAuth));
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'SSU Corona Project' });
+router.get("/", function (req, res) {
+    if (req.session.auth) {
+        res.render("index", { title: "SSU Corona Project" });
+    } else {
+        res.render("login", { title: "SSU Corona Project" });
+    }
 });
 
 module.exports = router;

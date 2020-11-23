@@ -1,185 +1,240 @@
-:root{
-  --main-color : rgb(54, 81, 235);
-  --warning-color: rgb(255, 0, 106);
+:root {
+    --main-color: rgb(54, 81, 235);
+    --warning-color: rgb(255, 0, 106);
 }
 
-body{
-  margin : 0;
+body {
+    margin: 0;
 }
 
-a{
-  text-decoration: none;
-  display: inline-block;
+a {
+    text-decoration: none;
+    display: inline-block;
 }
 
-button{
-  background: none;
-  border: none;
+button {
+    background: none;
+    border: none;
 }
-button:hover{
-  cursor: pointer;
+button:hover {
+    cursor: pointer;
 }
 
-li{
-  list-style: none;
+li {
+    list-style: none;
 }
 /*header*/
-#title{
-  color : var(--main-color);
-  font-family: 'Baloo Da 2', cursive;
-  font-size : 25px;
+#title {
+    color: var(--main-color);
+    font-family: "Baloo Da 2", cursive;
+    font-size: 25px;
 }
-header{
-  max-height: 10vh;
-  border-bottom: 1px solid blue;
-  padding: 0.5em 1em;
-  font-weight: bold;
+header {
+    max-height: 10vh;
+    border-bottom: 1px solid blue;
+    padding: 0.5em 1em;
+    font-weight: bold;
 }
-header .container{
-  max-width: 1000px;
-  margin-left : auto;
-  margin-right : auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+header .container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-header .menu-bar button{
-  color: var(--main-color);
-  font-size: 25px;
+header .menu-bar button {
+    color: var(--main-color);
+    font-size: 25px;
 }
-header .menu-bar button:hover{
-  cursor: pointer;
+header .menu-bar button:hover {
+    cursor: pointer;
 }
 
 /*nav menu*/
-.menu-buttons{
-  position: fixed;
-  right: 0;
-  width: 50vw;
-  height: 90vh;
-  border : 2px solid var(--main-color);
-  border-top : none;
-  display: none;
-  background: white;
-  padding: 0;
-  flex-direction: column;
-  align-items: center;
-  justify-content:flex-start;
+.menu-buttons {
+    position: fixed;
+    right: 0;
+    width: 50vw;
+    height: 90vh;
+    border: 2px solid var(--main-color);
+    border-top: none;
+    display: none;
+    background: white;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.menu-buttons ul{
-  margin: 0;
-  padding: 0;
-  width: 100%;
+.menu-buttons ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
-.menu-buttons li{
-  font-size: 17px;
-  font-family: 'Nanum Gothic', sans-serif;
-  font-weight: bold;
-  line-height: 2em;
-  text-align: center;
-  width: 100%;
-  border-bottom: 1px solid blue;
+.menu-buttons li {
+    font-size: 17px;
+    font-family: "Nanum Gothic", sans-serif;
+    font-weight: bold;
+    line-height: 2em;
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid blue;
 }
 
-.menu-buttons a{
-  color: var(--main-color);
+.menu-buttons a {
+    color: var(--main-color);
+}
+/*login*/
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: var(--main-color);
+    font-family: "Nanum Gothic", sans-serif;
+}
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+    padding: 12vh 5vw;
+    text-align: center;
+}
+.login-container .title {
+    margin-bottom: 0.2em;
+    font-size: 30px;
+    font-family: "Baloo Da 2", cursive;
+}
+.login-container .fa-user {
+    border: 2px solid var(--main-color);
+    border-radius: 50%;
+    font-size: 18px;
+    padding: 1em;
+    margin-bottom: 2em;
+    /* text-align: center; */
+}
+.login-container input {
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    border: none;
+    padding-left: 0.2em;
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    font-size: 15px;
+    height: 2em;
+    background: none;
+    margin-bottom: 1em;
+    width: 100%;
+}
+.login-container button {
+    width: 100%;
+    font-size: 15px;
+    margin-top: 2em;
+    background-color: var(--main-color);
+    height: 3em;
+    color: white;
+    font-family: "Baloo Da 2", cursive;
 }
 
 /*secion A*/
-.sectionA{
-  margin-top: 20px;
-  min-height: 90vh;
-  font-family: 'Nanum Gothic', sans-serif;
-  line-height: 1.5rem;
+.sectionA {
+    margin-top: 20px;
+    min-height: 90vh;
+    font-family: "Nanum Gothic", sans-serif;
+    line-height: 1.5rem;
 }
 
-.sectionA .container{
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.sectionA .container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.sectionA .container .editor{
-  align-items: center;
-  justify-content: center;
-  display: none;
+.sectionA .container .editor {
+    align-items: center;
+    justify-content: center;
+    display: none;
 }
-.sectionA .container .editor-converse{
-  align-items: center;
-  justify-content: center;
-}
-
-.sectionA .container .delete-checkbox{
-  width: 20px;
-  height: 20px;
+.sectionA .container .editor-converse {
+    align-items: center;
+    justify-content: center;
 }
 
-.sectionA .container #delete-button, 
-.sectionA .container #save-button{
-  margin-top: 10px;
-  background: var(--main-color);
-  font-size: 15px;
-  color: white;
-  width:100px;
-  line-height: 2em;
+.sectionA .container .delete-checkbox {
+    width: 20px;
+    height: 20px;
 }
 
-.sectionA .container .name_field, .nfcid_field, .belong_field{
-  max-width:60px; 
+.sectionA .container #delete-button,
+.sectionA .container #save-button {
+    margin-top: 10px;
+    background: var(--main-color);
+    font-size: 15px;
+    color: white;
+    width: 100px;
+    line-height: 2em;
 }
 
-.sectionA .container #add-button{
-  margin-top: 10px;
-  font-size: 20px;
+.sectionA .container .name_field,
+.nfcid_field,
+.belong_field {
+    max-width: 60px;
+}
+
+.sectionA .container #add-button {
+    margin-top: 10px;
+    font-size: 20px;
 }
 
 /*sectionA .small-container*/
-.sectionA .container .small-container{
-  display: flex;
-  max-width: inherit;
-  width: 80vw;
-  flex-direction: row;
-  justify-content: space-between;
+.sectionA .container .small-container {
+    display: flex;
+    max-width: inherit;
+    width: 80vw;
+    flex-direction: row;
+    justify-content: space-between;
 }
-.sectionA .container .small-container #sub-title{
-  font-size: inherit;
+.sectionA .container .small-container #sub-title {
+    font-size: inherit;
 }
-.sectionA .container .small-container #edit-button{
-  font-size: 25px;
+.sectionA .container .small-container #edit-button {
+    font-size: 25px;
 }
 
 /*user table*/
-#user-table{
-  font-size: 15px;
-  width: 100%;
-  text-align: center;
-  border: 1px solid var(--main-color);
+#user-table {
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid var(--main-color);
 }
-#user-table th{
-  background-color: var(--main-color);
-  color:white;
+#user-table th {
+    background-color: var(--main-color);
+    color: white;
 }
 
 /*user-temp-table*/
-#user-temp-table{
-  font-size: 15px;
-  width: 100%;
-  text-align: center;
-  border: 1px solid var(--main-color);
+#user-temp-table {
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid var(--main-color);
 }
-#user-temp-table th{
-  background-color: var(--main-color);
-  color:white;
+#user-temp-table th {
+    background-color: var(--main-color);
+    color: white;
 }
-#user-temp-table .high-temp{
-  color: white;
-  background: var(--warning-color);
+#user-temp-table .high-temp {
+    color: white;
+    background: var(--warning-color);
 }
 /*section-status*/
 /* .section-status{
@@ -200,31 +255,34 @@ header .menu-bar button:hover{
   color: white;
 } */
 
-@media(max-width:768px){
-  /* .section-status{
+@media (max-width: 768px) {
+    /* .section-status{
     width: 50vw;
   } */
-  .sectionA .container{
-    max-width: 90vw;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #title{
-    font-size:20px;
-  }
-  #user-table{
-    font-size: 12px;
-    display: flex;
-    overflow: scroll;
-  }
-  #user-temp-table{
-    display: flex;
-    overflow: scroll;
-  }
-  #user-temp-table .th-long-width{
-    min-width: 120px;
-  }
-  .sectionA .container .small-container #edit-button{
-    font-size: 20px;
-  }
+    .sectionA .container {
+        max-width: 90vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .login-container {
+        width: 70vw;
+    }
+    #title {
+        font-size: 20px;
+    }
+    #user-table {
+        font-size: 12px;
+        display: flex;
+        overflow: scroll;
+    }
+    #user-temp-table {
+        display: flex;
+        overflow: scroll;
+    }
+    #user-temp-table .th-long-width {
+        min-width: 120px;
+    }
+    .sectionA .container .small-container #edit-button {
+        font-size: 20px;
+    }
 }

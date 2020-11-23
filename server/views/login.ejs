@@ -1,0 +1,41 @@
+<%- include('./partials/header.ejs'); %>
+<section class="login">
+  <div class="login-container">
+    <h3 class="title">Admin Sign in</h3>
+    <h3><i class="fas fa-user"></i></h3>
+    <div>
+      <input type="text" name="username" id="name" placeholder="아이디"><br>
+      <input type="password" name="password" id="password" placeholder="비밀번호"><br>
+      <button type="submit" id="loginButton">LOGIN</button>
+    </div>
+  </div>
+</section>
+<%-include('./partials/tail.ejs')%>
+<script type="text/javascript">
+  $('.menu-bar').hide();
+
+  $('#loginButton').click(() => {
+    let id = $('#name').val();
+    let password = $('#password').val();
+    const targetObject = { id, password };
+
+    $.ajax({
+      url: '/auth/signin',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(targetObject),
+      dataType: 'json',
+      success: (result) => {
+        if (result.flag) {
+          location.replace('/');
+        } else {
+          alert('이름 혹은 비밀번호가 일치하지 않습니다.');
+          $('#password').val('');
+        }
+      }
+    });
+  });
+</script>
+</body>
+
+</html>
