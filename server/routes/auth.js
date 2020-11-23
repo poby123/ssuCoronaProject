@@ -19,7 +19,7 @@ router.post("/signin", function (req, res) {
                 console.log(err);
             }
             //when auth is 0, forbid login.
-            else if (results.length == 1 && results[0].auth != 0) {
+            else if (results.length == 1) {
                 req.session.id = results[0].id;
 
                 //auth saving.
@@ -52,6 +52,8 @@ router.get("/signout", (req, res) => {
                 res.redirect("/");
             }
         });
+    } else {
+        res.redirect("/");
     }
 });
 module.exports = router;
