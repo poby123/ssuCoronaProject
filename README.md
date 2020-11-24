@@ -11,4 +11,3 @@
 | /rest/user/all | GET | - | 체온 정보를 포함한 모든 사용자 정보 확인.|
 | /rest/user/withouttemp | GET | - | 체온 정보를 제외한 모든 사용자 정보 확인.|
 | /rest/user/addTempData | GET | nfcid=id&temperature=temp | 체온 저장|
-| /rest/addYear | GET | - | 날짜별로 체온을 저장하기 위한 1년치 컬럼을 생성.
