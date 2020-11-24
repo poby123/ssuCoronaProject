@@ -5,24 +5,22 @@ const router = express.Router();
 
 const dbConfig = require("../config/database.js");
 const sessionAuth = require("../config/session.js");
-
+const MyDate = require("./../classes/MyDate").MyDate;
 const connection = mysql.createPool(dbConfig);
+const myDate = new MyDate(connection);
 router.use(session(sessionAuth));
 
 /* GET home page. */
 router.post("/signin", function (req, res) {
     if (req.body.id && req.body.password) {
+        myDate.deletePrevDays();
         const id = req.body.id;
         const pw = req.body.password;
         connection.query("SELECT * FROM tbladmin where id=? and password=?", [id, pw], function (err, results) {
             if (err) {
                 console.log(err);
-            }
-            //when auth is 0, forbid login.
-            else if (results.length == 1) {
+            } else if (results.length == 1) {
                 req.session.id = results[0].id;
-
-                //auth saving.
                 req.session.auth = true;
 
                 //session saving.

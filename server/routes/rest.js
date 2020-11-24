@@ -85,7 +85,7 @@ router.get("/addTempData", (req, res) => {
     let nfcid = req.query.nfcid;
     let temperature = req.query.temperature;
     if (nfcid && temperature) {
-        user.addTempData(temperature, nfcid)
+        user.addTempData(nfcid, temperature)
             .then((result) => {
                 res.json(result);
             })
@@ -95,39 +95,6 @@ router.get("/addTempData", (req, res) => {
     } else {
         res.json({ result: false });
     }
-});
-
-/* alter table add year date as column */
-router.get("/addYear", (req, res) => {
-    let query = `alter table tblTemp add( `;
-
-    //set targetYear using current year
-    let targetYear = new Date().getFullYear();
-
-    //iterate month
-    for (let i = 1; i <= 12; ++i) {
-        let thisMonthLast = new Date(targetYear, i, 0).getDate(); //get last date of month
-        let targetMonth = i < 10 ? "0" + i : i; //fill 0 to make 2 digits.
-
-        //iterate date of month
-        for (let j = 1; j <= thisMonthLast; ++j) {
-            let targetDate = j < 10 ? "0" + j : j; //fill 0 to make 2 digits.
-            query += `t_${targetYear}${targetMonth}${targetDate} varchar(5),`;
-        }
-    }
-    query = query.substring(0, query.length - 1); //to delete last of query ',' character that cause issue.
-    query += ")";
-    connection.query(query, (err) => {
-        if (err) {
-            console.log(err);
-            // res.render('index', { title: 'Express' });
-            res.json({ result: false });
-        } else {
-            console.log("success");
-            // res.render('index', { title: 'Express' });
-            res.json({ result: true });
-        }
-    });
 });
 
 module.exports = router;

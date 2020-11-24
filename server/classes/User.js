@@ -1,19 +1,12 @@
+const MyDate = require("./MyDate.js").MyDate;
 class User {
     constructor(connection) {
         this.connection = connection;
-    }
-
-    /* function that convert Date Object to YYYY-MM-DD string */
-    getFormatDate(date) {
-        let year = date.getFullYear();
-        let month = 1 + date.getMonth();
-        month = month < 10 ? "0" + month : month;
-        let day = date.getDate();
-        day = day < 10 ? "0" + day : day;
-        return `${year}${month}${day}`;
+        this.myDate = new MyDate(connection);
     }
 
     getUserAll() {
+        this.myDate.checkToday();
         return new Promise((resolve, reject) =>
             this.connection.query("SELECT * FROM tbltemp", (err, result) => {
                 if (err) {
@@ -27,6 +20,7 @@ class User {
     }
 
     getUserWithoutTemp() {
+        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let query = "SELECT name, nfcid, belong, id FROM tbltemp";
             this.connection.query(query, (err, result) => {
@@ -42,9 +36,10 @@ class User {
     }
 
     identify(nfcid) {
+        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let today = new Date();
-            today = "t_" + this.getFormatDate(today);
+            today = "t_" + this.myDate.getFormatDate(today);
             this.connection.query(
                 `SELECT name, belong, id,${today} FROM tblTemp where nfcid=?`,
                 [nfcid],
@@ -67,6 +62,7 @@ class User {
     }
 
     addUser(target) {
+        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             if (!Array.isArray(target)) {
                 target = Array(target);
@@ -96,6 +92,7 @@ class User {
     }
 
     deleteUser(target) {
+        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let query = "DELETE FROM tblTemp where ";
             let params = [];
@@ -120,18 +117,23 @@ class User {
         });
     }
 
-    addTempData(temperature, nfcid) {
+    addTempData(nfcid, temperature) {
+        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let now = new Date();
-            now = "t_" + getFormatDate(now);
-            this.connection.query(`UPDATE tbltemp SET ${now} = ? WHERE nfcid = ?`, [temperature, nfcid], (err) => {
-                if (err) {
-                    console.log(err);
-                    reject({ result: false });
-                } else {
-                    resolve({ result: true });
-                }
-            });
+            now = "t_" + this.myDate.getFormatDate(now);
+            this.connection.query(
+                `UPDATE tbltemp SET ${now} = ? WHERE nfcid = ?`,
+                [temperature, nfcid],
+                (err, result) => {
+                    if (err || result["affectedRows"] == 0) {
+                        console.log(err);
+                        reject({ result: false });
+                    } else {
+                        resolve({ result: true });
+                    }
+                },
+            );
         });
     }
 }
