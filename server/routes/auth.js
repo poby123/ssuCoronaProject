@@ -20,7 +20,7 @@ router.post("/signin", function (req, res) {
                 console.log(err);
             } else if (results.length == 1) {
                 myDate.deletePrevDays();
-                this.myDate.checkToday();
+                myDate.checkToday();
 
                 req.session.id = results[0].id;
                 req.session.auth = true;
