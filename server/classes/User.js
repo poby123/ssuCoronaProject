@@ -6,7 +6,6 @@ class User {
     }
 
     getUserAll() {
-        this.myDate.checkToday();
         return new Promise((resolve, reject) =>
             this.connection.query("SELECT * FROM tbltemp", (err, result) => {
                 if (err) {
@@ -20,7 +19,6 @@ class User {
     }
 
     getUserWithoutTemp() {
-        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let query = "SELECT name, nfcid, belong, id FROM tbltemp";
             this.connection.query(query, (err, result) => {
@@ -36,7 +34,6 @@ class User {
     }
 
     identify(nfcid) {
-        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let today = new Date();
             today = "t_" + this.myDate.getFormatDate(today);
@@ -62,7 +59,6 @@ class User {
     }
 
     addUser(target) {
-        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             if (!Array.isArray(target)) {
                 target = Array(target);
@@ -92,7 +88,6 @@ class User {
     }
 
     deleteUser(target) {
-        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let query = "DELETE FROM tblTemp where ";
             let params = [];
@@ -118,7 +113,6 @@ class User {
     }
 
     addTempData(nfcid, temperature) {
-        this.myDate.checkToday();
         return new Promise((resolve, reject) => {
             let now = new Date();
             now = "t_" + this.myDate.getFormatDate(now);

@@ -13,13 +13,15 @@ router.use(session(sessionAuth));
 /* GET home page. */
 router.post("/signin", function (req, res) {
     if (req.body.id && req.body.password) {
-        myDate.deletePrevDays();
         const id = req.body.id;
         const pw = req.body.password;
         connection.query("SELECT * FROM tbladmin where id=? and password=?", [id, pw], function (err, results) {
             if (err) {
                 console.log(err);
             } else if (results.length == 1) {
+                myDate.deletePrevDays();
+                this.myDate.checkToday();
+
                 req.session.id = results[0].id;
                 req.session.auth = true;
 
