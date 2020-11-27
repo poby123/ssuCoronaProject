@@ -1,4 +1,8 @@
 const MyDate = require("./MyDate.js").MyDate;
+const CryptoJS = require("crypto-js");
+const AES = CryptoJS.AES;
+// const key = "secret key 123";
+const key = process.env.USER_AES_KEY;
 class User {
     constructor(connection) {
         this.connection = connection;
@@ -12,21 +16,36 @@ class User {
                     console.log(err);
                     reject({ result: false });
                 } else {
+                    this.decryptUser(result);
                     resolve({ result: true, content: result });
                 }
             }),
         );
     }
 
+    decryptUser(result) {
+        result.forEach((element) => {
+            const name = element["NAME"];
+            const nameBytes = AES.decrypt(name, key);
+            const decryptName = nameBytes.toString(CryptoJS.enc.Utf8);
+            element["NAME"] = decryptName;
+
+            const id = element["id"];
+            const idBytes = AES.decrypt(id, key);
+            const decryptId = idBytes.toString(CryptoJS.enc.Utf8);
+            element["id"] = decryptId;
+        });
+    }
+
     getUserWithoutTemp() {
         return new Promise((resolve, reject) => {
-            let query = "SELECT name, nfcid, belong, id FROM tbltemp";
+            let query = "SELECT NAME, nfcid, belong, id FROM tbltemp";
             this.connection.query(query, (err, result) => {
                 if (err) {
                     console.log(err);
                     reject({ result: false });
                 } else {
-                    // console.log(result);
+                    this.decryptUser(result);
                     resolve({ result: true, content: result });
                 }
             });
@@ -68,10 +87,10 @@ class User {
             let params = [];
             target.forEach((element) => {
                 if (element["name"] != "" && element["nfcid"] != "") {
-                    params.push(element["name"]);
+                    params.push(AES.encrypt(element["name"], key).toString());
                     params.push(element["nfcid"]);
                     params.push(element["belong"]);
-                    params.push(element["id"]);
+                    params.push(AES.encrypt(element["id"], key).toString());
                     query += "(?,?,?,?),";
                 }
             });
