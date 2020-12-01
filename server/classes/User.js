@@ -1,5 +1,6 @@
 const MyDate = require("./MyDate.js").MyDate;
 const CryptoJS = require("crypto-js");
+const { query } = require("express");
 const AES = CryptoJS.AES;
 // const key = "secret key 123";
 const key = process.env.USER_AES_KEY;
@@ -37,6 +38,18 @@ class User {
         });
     }
 
+    decryptAUser(element) {
+        let name = element.NAME;
+        let nameBytes = AES.decrypt(name, key);
+        let decryptName = nameBytes.toString(CryptoJS.enc.Utf8);
+        element.NAME = decryptName;
+
+        let id = element.id;
+        const idBytes = AES.decrypt(id, key);
+        const decryptId = idBytes.toString(CryptoJS.enc.Utf8);
+        element.id = decryptId;
+    }
+
     getUserWithoutTemp() {
         return new Promise((resolve, reject) => {
             let query = "SELECT NAME, nfcid, belong, id FROM tbltemp";
@@ -57,7 +70,7 @@ class User {
             let today = new Date();
             today = "t_" + this.myDate.getFormatDate(today);
             this.connection.query(
-                `SELECT name, belong, id,${today} FROM tblTemp where nfcid=?`,
+                `SELECT NAME, belong, id,${today} FROM tblTemp where nfcid=?`,
                 [nfcid],
                 (err, queryResult) => {
                     if (err) {
@@ -68,6 +81,9 @@ class User {
                         if (queryResult[0][`${today}`]) {
                             temperature = queryResult[0][`${today}`];
                         }
+                        this.decryptAUser(queryResult[0]);
+                        // console.log(queryResult[0]);
+
                         resolve({ result: true, obj: queryResult[0] });
                     } else {
                         reject({ result: false, obj: null });

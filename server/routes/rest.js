@@ -14,8 +14,8 @@ const user = new User(connection);
 
 /* get user router*/
 router.get("/user/:mode", (req, res) => {
-    if (req.session.auth) {
-        if (req.params.mode == "all") {
+    if (req.params.mode == "all") {
+        if (req.session.auth) {
             user.getUserAll()
                 .then((result) => {
                     res.json(result);
@@ -23,7 +23,11 @@ router.get("/user/:mode", (req, res) => {
                 .catch((err) => {
                     res.json(err);
                 });
-        } else if (req.params.mode == "withouttemp") {
+        } else {
+            res.json({ result: false, msg: "권한이 없습니다." });
+        }
+    } else if (req.params.mode == "withouttemp") {
+        if (req.session.auth) {
             user.getUserWithoutTemp()
                 .then((result) => {
                     res.json(result);
@@ -31,27 +35,27 @@ router.get("/user/:mode", (req, res) => {
                 .catch((err) => {
                     res.json(err);
                 });
-        } else if (req.params.mode == "identify") {
-            let nfcid = req.query.nfcid;
-            if (nfcid) {
-                user.identify(nfcid)
-                    .then((result) => {
-                        console.log(result);
-                        res.json(result);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        res.json(err);
-                    });
-            } else {
-                res.json({ result: null });
-            }
         } else {
-            res.status(404);
+            res.json({ result: false, msg: "권한이 없습니다." });
+        }
+    } else if (req.params.mode == "identify") {
+        let nfcid = req.query.nfcid;
+        if (nfcid) {
+            user.identify(nfcid)
+                .then((result) => {
+                    console.log(result);
+                    res.json(result);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.json(err);
+                });
+        } else {
             res.json({ result: null });
         }
     } else {
-        res.json({ result: false, msg: "권한이 없습니다." });
+        res.status(404);
+        res.json({ result: null });
     }
 });
 
@@ -94,22 +98,18 @@ router.delete("/user", (req, res) => {
 
 /* add temperature information */
 router.get("/addTempData", (req, res) => {
-    if (req.session.auth) {
-        let nfcid = req.query.nfcid;
-        let temperature = req.query.temperature;
-        if (nfcid && temperature) {
-            user.addTempData(nfcid, temperature)
-                .then((result) => {
-                    res.json(result);
-                })
-                .catch((err) => {
-                    res.json(err);
-                });
-        } else {
-            res.json({ result: false });
-        }
+    let nfcid = req.query.nfcid;
+    let temperature = req.query.temperature;
+    if (nfcid && temperature) {
+        user.addTempData(nfcid, temperature)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.json(err);
+            });
     } else {
-        res.json({ result: false, msg: "권한이 없습니다." });
+        res.json({ result: false });
     }
 });
 
