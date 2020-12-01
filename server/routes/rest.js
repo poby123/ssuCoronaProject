@@ -61,23 +61,19 @@ router.get("/user/:mode", (req, res) => {
 
 /* add user information */
 router.post("/user", (req, res) => {
-    if (req.session.auth) {
-        let target = req.body.target;
-        if (target) {
-            user.addUser(target)
-                .then((result) => {
-                    console.log(result);
-                    res.json(result);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    res.json(err);
-                });
-        } else {
-            res.json({ result: false });
-        }
+    let target = req.body.target;
+    if (target) {
+        user.addUser(target)
+            .then((result) => {
+                console.log(result);
+                res.json(result);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.json(err);
+            });
     } else {
-        res.json({ result: false, msg: "권한이 없습니다." });
+        res.json({ result: false });
     }
 });
 
