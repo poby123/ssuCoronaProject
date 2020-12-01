@@ -1,9 +1,28 @@
 <%-include('./partials/header.ejs')%>
-    <section class="sectionA">
-      <div class="container">
-        <h4>Coming Soon...</h4>
-      </div>
-    </section>
+<section class="sectionA">
+  <div class="container">
+    <h4>Coming Soon...</h4>
+  </div>
+</section>
 <%-include('./partials/tail.ejs')%>
+<script>
+  var xhr = new XMLHttpRequest();
+  var url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson'; /*URL*/
+  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'SIA6zeO1jSRjxs9%2FHgiFs9aAay8cXighQnbtqGB3bH6fvtw5cWKJThF6m57A3QDwLlKZp3lRRT3EbuJVt9R4Fg%3D%3D'; /*Service Key*/
+  queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+  queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent('20200310'); /**/
+  queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent('20201101'); /**/
+  xhr.open('GET', url + queryParams, true);
+  xhr.onreadystatechange = function () {
+    if (this.readyState == 4) {
+      alert('Status: ' + this.status + 'nHeaders: ' + JSON.stringify(this.getAllResponseHeaders()) + 'nBody: ' + this.responseText);
+      console.log(this.status);
+    }
+  };
+
+  xhr.send('');
+</script>
 </body>
+
 </html>

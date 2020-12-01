@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var helmet = require("helmet");
+var cors = require("cors");
 
 var indexRouter = require("./server/routes/index");
 var userRouter = require("./server/routes/user");
@@ -25,6 +26,7 @@ app.use(
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/free-v4-font-face.min.css 'unsafe-inline'",
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/free.min.css 'unsafe-inline'",
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/free-v4-shims.min.css 'unsafe-inline'",
+                "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson",
             ],
             "script-src": [
                 "'self' 'unsafe-inline'",
@@ -41,6 +43,8 @@ app.use(
         },
     }),
 );
+app.use(cors({ origin: "http://openapi.data.go.kr", credentials: true }));
+// app.use(cors());
 app.disable("x-powered-by");
 app.use(logger("dev"));
 app.use(express.json());
