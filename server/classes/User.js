@@ -1,9 +1,7 @@
 const MyDate = require("./MyDate.js").MyDate;
 const CryptoJS = require("crypto-js");
-const { query } = require("express");
 const AES = CryptoJS.AES;
-// const key = "secret key 123";
-const key = process.env.USER_AES_KEY;
+const key = require("../config/aes_key").key;
 class User {
     constructor(connection) {
         this.connection = connection;
