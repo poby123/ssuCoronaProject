@@ -52,7 +52,7 @@
       <%=today.stateTime%> 집계 기준)
     </h5>
     <hr>
-    <div class="chart-container"> 
+    <div class="chart-container">
       <canvas id="myChart">
         Your browser does not support canvas.
       </canvas>
@@ -69,21 +69,21 @@
     let backgroundColors = [];
     let borderColors = [];
   <%
-    function parse(str) {
-      if(!/^(\d){8}$/.test(str)) return "invalid date";
-      var y = str.substr(0,4),
-      m = str.substr(4,2) - 1,
-      d = str.substr(6,2);
-      return new Date(y,m,d);
-    }
+      function parse(str) {
+        if (!/^(\d){8}$/.test(str)) return "invalid date";
+        var y = str.substr(0, 4),
+          m = str.substr(4, 2) - 1,
+          d = str.substr(6, 2);
+        return new Date(y, m, d);
+      }
 
-    for(let i=0;i<coronaData.length;++i){
+    for (let i = 0; i < coronaData.length; ++i) {
       const date = parse(coronaData[i].stateDt + '');
-      let dateString = (date.getMonth()+1) + "." + date.getDate() + " ";
-      if(i > 0){
-        let increased = coronaData[i].decideCnt - coronaData[i-1].decideCnt;
+      let dateString = (date.getMonth() + 1) + "." + date.getDate() + " ";
+      if (i > 0) {
+        let increased = coronaData[i].decideCnt - coronaData[i - 1].decideCnt;
         %>
-        if(dates[dates.length-1] != '<%=dateString%>'){
+        if (dates[dates.length - 1] != '<%=dateString%>') {
           dates.push('<%=dateString%>');
           increased.push('<%=increased%>');
           backgroundColors.push('rgb(255, 99, 132,0.2)');
@@ -94,34 +94,34 @@
 
     }
   %>
-  console.log(dates);
-  console.log(increased);
+      console.log(dates);
+    console.log(increased);
 
-      var ctx = document.getElementById("myChart").getContext('2d');
+    var ctx = document.getElementById("myChart").getContext('2d');
 
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: dates,
-          datasets: [{
-            label: '일별 확진자 수',
-            data: increased,
-            backgroundColor: backgroundColors,
-            borderColor : borderColors,
-            borderWidth: 1
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: '일별 확진자 수',
+          data: increased,
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        maintainAspectRatio: true, // default value. false일 경우 포함된 div의 크기에 맞춰서 그려짐.
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
           }]
-        },
-        options: { 
-          maintainAspectRatio: true, // default value. false일 경우 포함된 div의 크기에 맞춰서 그려짐.
-          scales: {
-            yAxes: [{
-              ticks: { 
-                beginAtZero: true
-              } 
-            }]
-          }
         }
-      });
+      }
+    });
   </script>
   </body>
 

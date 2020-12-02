@@ -41,7 +41,7 @@ router.get("/", function (req, res) {
                         // console.log(result.response.body[0].items[0].item);
                         let target = result.response.body[0].items[0].item;
                         target.reverse();
-                        console.log(target);
+                        // console.log(target);
                         res.render("index", {
                             title: "SSU Corona Project",
                             coronaData: target,

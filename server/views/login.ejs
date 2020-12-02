@@ -4,9 +4,11 @@
     <h3 class="title">Admin Sign in</h3>
     <h3><i class="fas fa-user"></i></h3>
     <div>
-      <input type="text" name="username" id="name" placeholder="아이디"><br>
-      <input type="password" name="password" id="password" placeholder="비밀번호"><br>
-      <button type="submit" id="loginButton">LOGIN</button>
+      <form id="loginForm">
+        <input type="text" name="username" id="name" placeholder="아이디"><br>
+        <input type="password" name="password" id="password" placeholder="비밀번호"><br>
+        <button onclick="loginFormAction(); return false;" id="loginButton">LOGIN</button>
+      </form>
     </div>
   </div>
 </section>
@@ -14,7 +16,9 @@
 <script type="text/javascript">
   $('.menu-bar').hide();
 
-  $('#loginButton').click(() => {
+  // $('#loginButton').click(() => {
+  function loginFormAction() {
+
     let id = $('#name').val();
     let password = $('#password').val();
     const targetObject = { id, password };
@@ -27,6 +31,7 @@
       dataType: 'json',
       success: (result) => {
         if (result.flag) {
+          // console.log(result.flag);
           location.replace('/');
         } else {
           alert('이름 혹은 비밀번호가 일치하지 않습니다.');
@@ -34,7 +39,7 @@
         }
       }
     });
-  });
+  }
 </script>
 </body>
 
