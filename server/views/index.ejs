@@ -1,28 +1,128 @@
 <%-include('./partials/header.ejs')%>
-<section class="sectionA">
-  <div class="container">
-    <h4>Coming Soon...</h4>
+<section class="sectionCorona">
+  <% if(coronaData){ 
+      /*arrows*/
+      const upArrow = 'fas fa-sort-up';
+      const downArrow = 'fas fa-sort-down';
+      const dash = ''
+      
+      const today = coronaData[coronaData.length-1];
+      todayDateString = today.stateDt + "";
+      const todayDate = new Date(todayDateString.substr(0,4), todayDateString.substr(4,2)-1, todayDateString.substr(6,2));
+      const prevDay = coronaData[coronaData.length-2];
+      
+      const increasedDecide = today.decideCnt - prevDay.decideCnt;
+      const increasedExam = today.examCnt - prevDay.examCnt;
+      const increasedClear = today.clearCnt - prevDay.clearCnt;
+      const increasedDeath = today.deathCnt - prevDay.deathCnt;
+
+      const arrowDecide = increasedDecide  == 0 ? dash : (increasedDecide > 0 ? upArrow : downArrow);
+      const arrowExam = increasedExam  == 0 ? dash : (increasedExam > 0 ? upArrow : downArrow);
+      const arrowClear = increasedClear == 0 ? dash : (increasedClear > 0 ? upArrow : downArrow);
+      const arrowDeath = increasedDeath == 0 ? dash : (increasedDeath > 0 ? upArrow : downArrow);
+    %>
+  <div class="corona-container">
+    <h3>COVID-19 국내 상황</h3>
+    <div class="today-corona">
+      <div class="today-corona-element text-red">
+        <h5>확진환자</h5>
+        <p class="total"><%=today.decideCnt%></p>
+        <p><%=increasedDecide%><i class="<%=arrowDecide%>"></i></p>
+      </div>
+      <hr>
+      <div class="today-corona-element text-yellow">
+        <h5>검사 중</h5>
+        <p class="total"><%=today.examCnt%></p>
+        <p><%=increasedExam%><i class="<%=arrowExam%>"></i></p>
+      </div>
+      <hr>
+      <div class="today-corona-element text-blue">
+        <h5>격리해제</h5>
+        <p class="total"><%=today.clearCnt%></p>
+        <p><%=increasedClear%><i class="<%=arrowClear%>"></i></p>
+      </div>
+      <hr>
+      <div class="today-corona-element text-black">
+        <h5>사망자</h5>
+        <p class="total"><%=today.decideCnt%></p>
+        <p><%=increasedDeath%><i class="<%=arrowDeath%>"></i></p>
+      </div>
+    </div>
+    <h5 class="align-right">( <%=todayDate.getFullYear()%>.<%=todayDate.getMonth()+1%>.<%=todayDate.getDate()%>,
+      <%=today.stateTime%> 집계 기준)
+    </h5>
+    <hr>
+    <div class="chart-container"> 
+      <canvas id="myChart">
+        Your browser does not support canvas.
+      </canvas>
+    </div>
   </div>
+  <%} else { %>
+  코로나 데이터를 불러올 수 없습니다.
+  <%}%>
 </section>
 <%-include('./partials/tail.ejs')%>
-<script>
-  var xhr = new XMLHttpRequest();
-  var url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson'; /*URL*/
-  var queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + 'SIA6zeO1jSRjxs9%2FHgiFs9aAay8cXighQnbtqGB3bH6fvtw5cWKJThF6m57A3QDwLlKZp3lRRT3EbuJVt9R4Fg%3D%3D'; /*Service Key*/
-  queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-  queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
-  queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent('20200310'); /**/
-  queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent('20201101'); /**/
-  xhr.open('GET', url + queryParams, true);
-  xhr.onreadystatechange = function () {
-    if (this.readyState == 4) {
-      alert('Status: ' + this.status + 'nHeaders: ' + JSON.stringify(this.getAllResponseHeaders()) + 'nBody: ' + this.responseText);
-      console.log(this.status);
+  <script>
+    let dates = [];
+    let increased = [];
+    let backgroundColors = [];
+    let borderColors = [];
+  <%
+    function parse(str) {
+      if(!/^(\d){8}$/.test(str)) return "invalid date";
+      var y = str.substr(0,4),
+      m = str.substr(4,2) - 1,
+      d = str.substr(6,2);
+      return new Date(y,m,d);
     }
-  };
 
-  xhr.send('');
-</script>
-</body>
+    for(let i=0;i<coronaData.length;++i){
+      const date = parse(coronaData[i].stateDt + '');
+      let dateString = (date.getMonth()+1) + "." + date.getDate() + " ";
+      if(i > 0){
+        let increased = coronaData[i].decideCnt - coronaData[i-1].decideCnt;
+        %>
+        if(dates[dates.length-1] != '<%=dateString%>'){
+          dates.push('<%=dateString%>');
+          increased.push('<%=increased%>');
+          backgroundColors.push('rgb(255, 99, 132,0.2)');
+          borderColors.push('rgba(255,99,132,1)');
+        }
+      <%
+    }
 
-</html>
+    }
+  %>
+  console.log(dates);
+  console.log(increased);
+
+      var ctx = document.getElementById("myChart").getContext('2d');
+
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: '일별 확진자 수',
+            data: increased,
+            backgroundColor: backgroundColors,
+            borderColor : borderColors,
+            borderWidth: 1
+          }]
+        },
+        options: { 
+          maintainAspectRatio: true, // default value. false일 경우 포함된 div의 크기에 맞춰서 그려짐.
+          scales: {
+            yAxes: [{
+              ticks: { 
+                beginAtZero: true
+              } 
+            }]
+          }
+        }
+      });
+  </script>
+  </body>
+
+  </html>

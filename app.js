@@ -32,6 +32,8 @@ app.use(
                 "'self' 'unsafe-inline'",
                 "https://code.jquery.com/jquery-3.5.1.min.js",
                 "https://kit.fontawesome.com/02656a2617.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js",
+                "http://openapi.data.go.kr/",
             ],
             "font-src": [
                 "https://ka-f.fontawesome.com/releases/v5.15.1/css/ 'unsafe-inline'",
@@ -44,7 +46,6 @@ app.use(
     }),
 );
 app.use(cors({ origin: "http://openapi.data.go.kr", credentials: true }));
-// app.use(cors());
 app.disable("x-powered-by");
 app.use(logger("dev"));
 app.use(express.json());

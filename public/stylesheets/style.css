@@ -140,6 +140,56 @@ header .menu-bar button:hover {
     font-family: "Baloo Da 2", cursive;
 }
 
+/*sectionCorona*/
+.sectionCorona {
+    margin-top: 20px;
+    min-height: 90vh;
+    font-family: "Nanum Gothic", sans-serif;
+    line-height: 1.5rem;
+}
+
+.corona-container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+
+.today-corona {
+    width: 80%;
+    /* border: 1px solid blue; */
+    display: flex;
+    justify-content: space-around;
+}
+
+.today-corona-element {
+    display: 1;
+    text-align: center;
+}
+
+.text-red {
+    color: red;
+}
+.text-blue {
+    color: blue;
+}
+.text-yellow {
+    color: rgb(218, 143, 45);
+}
+.total {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.chart-container{
+    margin-bottom: 20px;
+    width: 100%;
+}
+
 /*secion A*/
 .sectionA {
     margin-top: 20px;
@@ -259,6 +309,12 @@ header .menu-bar button:hover {
     /* .section-status{
     width: 50vw;
   } */
+  .section-corona{
+      font-size:12px;
+  }
+  .total{
+      font-size:17px;
+  }
     .sectionA .container {
         max-width: 90vw;
         margin-left: auto;
