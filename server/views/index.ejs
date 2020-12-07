@@ -77,10 +77,12 @@
         return new Date(y, m, d);
       }
 
+    let dateStringArr = []
     for (let i = 0; i < coronaData.length; ++i) {
       const date = parse(coronaData[i].stateDt + '');
       let dateString = (date.getMonth() + 1) + "." + date.getDate() + " ";
-      if (i > 0) {
+      dateStringArr.push(dateString);
+      if (i > 0 && dateStringArr[i - 1] != dateStringArr[i]) {
         let increased = coronaData[i].decideCnt - coronaData[i - 1].decideCnt;
         %>
         if (dates[dates.length - 1] != '<%=dateString%>') {
