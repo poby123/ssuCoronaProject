@@ -17,7 +17,7 @@ router.get("/", function (req, res) {
     if (req.session.auth) {
         let myDate = new MyDate(connection);
         const today = new Date();
-        let prev7Days = new Date().setDate(today.getDate() - 8);
+        let prev7Days = new Date().setDate(today.getDate() - 7);
         prev7Days = new Date(prev7Days);
         var url = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson";
         const serviceKey =

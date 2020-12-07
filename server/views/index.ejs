@@ -85,19 +85,18 @@
       if (i > 0 && dateStringArr[i - 1] != dateStringArr[i]) {
         let increased = coronaData[i].decideCnt - coronaData[i - 1].decideCnt;
         %>
-        if (dates[dates.length - 1] != '<%=dateString%>') {
           dates.push('<%=dateString%>');
-          increased.push('<%=increased%>');
-          backgroundColors.push('rgb(255, 99, 132,0.2)');
-          borderColors.push('rgba(255,99,132,1)');
-        }
+        increased.push('<%=increased%>');
+        backgroundColors.push('rgb(255, 99, 132,0.2)');
+        borderColors.push('rgba(255,99,132,1)');
+
       <%
     }
 
     }
   %>
-      console.log(dates);
-    console.log(increased);
+    //   console.log(dates);
+    // console.log(increased);
 
     var ctx = document.getElementById("myChart").getContext('2d');
 
