@@ -1,4 +1,4 @@
-# ssuCoronaProjec
+# ssuCoronaProject
 ##### 2020학년도 숭실대학교 창의적공학설계 '세미콜론' 코로나 프로젝트 서버
 ### 구조
 ![설계도](https://user-images.githubusercontent.com/50279318/101649094-d98ab000-3a7d-11eb-972f-d906621f8bad.png)
