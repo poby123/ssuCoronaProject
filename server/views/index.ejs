@@ -1,55 +1,111 @@
 <%-include('./partials/header.ejs')%>
 <section class="sectionCorona">
-  <% if(coronaData){ 
+
+  <% 
+  let decideCnt_coronaObj = {};
+  let examCnt_coronaObj = {};
+  let clearCnt_coronaObj = {};
+  let deathCnt_coronaObj = {};
+
+  let decideCnt = [];
+  let examCnt = [];
+  let clearCnt = [];
+  let deathCnt = [];
+  let dates = [];
+  if(coronaData){ 
       /*arrows*/
       const upArrow = 'fas fa-sort-up';
       const downArrow = 'fas fa-sort-down';
       const dash = ''
+
+      /**/
       
-      const today = coronaData[coronaData.length-1];
-      todayDateString = today.stateDt + "";
-      const todayDate = new Date(todayDateString.substr(0,4), todayDateString.substr(4,2)-1, todayDateString.substr(6,2));
-      const prevDay = coronaData[coronaData.length-2];
-      
-      const increasedDecide = today.decideCnt - prevDay.decideCnt;
-      const increasedExam = today.examCnt - prevDay.examCnt;
-      const increasedClear = today.clearCnt - prevDay.clearCnt;
-      const increasedDeath = today.deathCnt - prevDay.deathCnt;
+  
+      function parse(str) {
+        if (!/^(\d){8}$/.test(str)) return "invalid date";
+        var y = str.substr(0, 4),
+          m = str.substr(4, 2) - 1,
+          d = str.substr(6, 2);
+        return new Date(y, m, d);
+      }
+
+      for (let i = 0; i < coronaData.length; ++i) {
+        const date = parse(coronaData[i].stateDt + '');
+        let dateString = (date.getMonth() + 1) + "." + date.getDate() + " ";
+        decideCnt_coronaObj[dateString] = coronaData[i].decideCnt;
+        examCnt_coronaObj[dateString] = coronaData[i].examCnt;
+        clearCnt_coronaObj[dateString] = coronaData[i].clearCnt;
+        deathCnt_coronaObj[dateString] = coronaData[i].deathCnt;
+      }
+  
+      let i = 0;
+      /*일일 사망자 수*/
+      for (const [key, value] of Object.entries(deathCnt_coronaObj)) {
+        deathCnt.push(value);
+        ++i;
+      }
+      totalNum = i; //중복없이 센 개수
+  
+      /*일일 격리해제 수*/
+      for (const [key, value] of Object.entries(clearCnt_coronaObj)) {
+        clearCnt.push(value);
+  
+      }
+  
+      /*일일 검사수*/
+      for (const [key, value] of Object.entries(examCnt_coronaObj)) {
+        examCnt.push(value);
+      }
+  
+      /*일일 확진자 수*/
+      i = 0;
+      for (const [key, value] of Object.entries(decideCnt_coronaObj)) {
+        decideCnt.push(value);
+        dates.push(key);
+      }
+
+      const increasedDecide = decideCnt[totalNum-1] - decideCnt[totalNum-2];
+      const increasedExam = examCnt[totalNum-1] - examCnt[totalNum-2];
+      const increasedClear = clearCnt[totalNum-1] - clearCnt[totalNum-2];
+      const increasedDeath = deathCnt[totalNum-1] - deathCnt[totalNum-2];
 
       const arrowDecide = increasedDecide  == 0 ? dash : (increasedDecide > 0 ? upArrow : downArrow);
       const arrowExam = increasedExam  == 0 ? dash : (increasedExam > 0 ? upArrow : downArrow);
       const arrowClear = increasedClear == 0 ? dash : (increasedClear > 0 ? upArrow : downArrow);
       const arrowDeath = increasedDeath == 0 ? dash : (increasedDeath > 0 ? upArrow : downArrow);
+
+      const todayDate = dates[totalNum-1];
+      <!-- const todayDate = new Date(todayDateString.substr(0,4), todayDateString.substr(4,2)-1, todayDateString.substr(6,2)); -->
     %>
   <div class="corona-container">
     <h3>COVID-19 국내 상황</h3>
     <div class="today-corona">
       <div class="today-corona-element text-red">
         <h5>확진환자</h5>
-        <p class="total"><%=today.decideCnt%></p>
+        <p class="total" id="today_decide"><%=decideCnt[totalNum-1]%></p>
         <p><%=increasedDecide%><i class="<%=arrowDecide%>"></i></p>
       </div>
       <hr>
       <div class="today-corona-element text-yellow">
         <h5>검사 중</h5>
-        <p class="total"><%=today.examCnt%></p>
+        <p class="total" id="today_exam"><%=examCnt[totalNum-1]%></p>
         <p><%=increasedExam%><i class="<%=arrowExam%>"></i></p>
       </div>
       <hr>
       <div class="today-corona-element text-blue">
         <h5>격리해제</h5>
-        <p class="total"><%=today.clearCnt%></p>
+        <p class="total" id="today_clear"><%=clearCnt[totalNum-1]%></p>
         <p><%=increasedClear%><i class="<%=arrowClear%>"></i></p>
       </div>
       <hr>
       <div class="today-corona-element text-black">
         <h5>사망자</h5>
-        <p class="total"><%=today.decideCnt%></p>
+        <p class="total" id="today_decide"><%=deathCnt[totalNum-1]%></p>
         <p><%=increasedDeath%><i class="<%=arrowDeath%>"></i></p>
       </div>
     </div>
-    <h5 class="align-right">( <%=todayDate.getFullYear()%>.<%=todayDate.getMonth()+1%>.<%=todayDate.getDate()%>,
-      <%=today.stateTime%> 집계 기준)
+    <h5 class="align-right">( <%=todayDate%>,
+      00:00 집계 기준)
     </h5>
     <hr>
     <div class="chart-container">
@@ -64,39 +120,26 @@
 </section>
 <%-include('./partials/tail.ejs')%>
   <script>
-    let dates = [];
     let increased = [];
+    let dates = [];
     let backgroundColors = [];
     let borderColors = [];
   <%
-      function parse(str) {
-        if (!/^(\d){8}$/.test(str)) return "invalid date";
-        var y = str.substr(0, 4),
-          m = str.substr(4, 2) - 1,
-          d = str.substr(6, 2);
-        return new Date(y, m, d);
-      }
 
-    let dateStringArr = []
-    for (let i = 0; i < coronaData.length; ++i) {
-      const date = parse(coronaData[i].stateDt + '');
-      let dateString = (date.getMonth() + 1) + "." + date.getDate() + " ";
-      dateStringArr.push(dateString);
-      if (i > 0 && dateStringArr[i - 1] != dateStringArr[i]) {
-        let increased = coronaData[i].decideCnt - coronaData[i - 1].decideCnt;
-        %>
-          dates.push('<%=dateString%>');
-        increased.push('<%=increased%>');
+      i = 0;
+    for (const [key, value] of Object.entries(decideCnt_coronaObj)) {
+      if (i > 0) {
+    %>
+
+          dates.push(<%=key %>);
+        increased.push(<%=decideCnt[i] %> - <%=decideCnt[i - 1] %>);
         backgroundColors.push('rgb(255, 99, 132,0.2)');
         borderColors.push('rgba(255,99,132,1)');
-
-      <%
-    }
-
+      
+      <%}
+      ++i;
     }
   %>
-    //   console.log(dates);
-    // console.log(increased);
 
     var ctx = document.getElementById("myChart").getContext('2d');
 
