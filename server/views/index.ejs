@@ -1,26 +1,28 @@
 <%-include('./partials/header.ejs')%>
 <section class="sectionCorona">
-
   <% 
+  /*{날짜: 수} 방식의 객체*/
   let decideCnt_coronaObj = {};
   let examCnt_coronaObj = {};
   let clearCnt_coronaObj = {};
   let deathCnt_coronaObj = {};
 
+  /*일일 확진자 수를 편리하게 계산하기 위해 만든 배열*/
   let decideCnt = [];
   let examCnt = [];
   let clearCnt = [];
   let deathCnt = [];
   let dates = [];
+
+  let i=0, totalNum=0;
+
   if(coronaData){ 
       /*arrows*/
       const upArrow = 'fas fa-sort-up';
       const downArrow = 'fas fa-sort-down';
       const dash = ''
 
-      /**/
-      
-  
+      /*날짜 파싱*/
       function parse(str) {
         if (!/^(\d){8}$/.test(str)) return "invalid date";
         var y = str.substr(0, 4),
@@ -29,27 +31,62 @@
         return new Date(y, m, d);
       }
 
+      /*객체 정렬을 위한 비교함수*/
+      function sortObjectCri(a, b){
+        let arr_a = a.split('.');
+        let arr_b = b.split('.');
+        for(let i=0;i<3;++i){
+          if(Number(arr_a[i]) > Number(arr_b[i])){
+            return 1;
+          }
+        }
+        return -1;
+      }
+
+      /*객체 정렬*/
+      function sortObject(o){
+        let sorted = {};
+        let k;
+        let a = [];
+        for(key in o){
+          if(o.hasOwnProperty(key)){
+            a.push(key);
+          }
+        }
+        a.sort(sortObjectCri);
+        for(key=0;key<a.length;++key){
+          sorted[a[key]] = o[a[key]];
+        }
+
+        return sorted;
+      }
+
+      /*받은 데이터를 돌면서 객체에 정보 추가 - 공공데이터 포털의 API에서 업데이트 정보를, 그와 같은 날짜의 정보보다 먼저주면 오류가 생길 수도 있다.*/
       for (let i = 0; i < coronaData.length; ++i) {
-        const date = parse(coronaData[i].stateDt + '');
-        let dateString = (date.getMonth() + 1) + "." + date.getDate() + " ";
+        let stateDt = coronaData[i].stateDt + '';
+        const date = parse(stateDt);
+        let dateString = (date.getFullYear()) + "." + (date.getMonth() + 1) + "." + date.getDate() + " ";
         decideCnt_coronaObj[dateString] = coronaData[i].decideCnt;
         examCnt_coronaObj[dateString] = coronaData[i].examCnt;
         clearCnt_coronaObj[dateString] = coronaData[i].clearCnt;
         deathCnt_coronaObj[dateString] = coronaData[i].deathCnt;
       }
   
-      let i = 0;
+      /*object sort*/
+      decideCnt_coronaObj = sortObject(decideCnt_coronaObj);
+      examCnt_coronaObj = sortObject(examCnt_coronaObj);
+      clearCnt_coronaObj = sortObject(clearCnt_coronaObj);
+      deathCnt_coronaObj = sortObject(deathCnt_coronaObj);
+
       /*일일 사망자 수*/
       for (const [key, value] of Object.entries(deathCnt_coronaObj)) {
         deathCnt.push(value);
-        ++i;
+        ++totalNum; /*중복없이 센 개수*/
       }
-      totalNum = i; //중복없이 센 개수
   
       /*일일 격리해제 수*/
       for (const [key, value] of Object.entries(clearCnt_coronaObj)) {
         clearCnt.push(value);
-  
       }
   
       /*일일 검사수*/
@@ -58,24 +95,31 @@
       }
   
       /*일일 확진자 수*/
-      i = 0;
       for (const [key, value] of Object.entries(decideCnt_coronaObj)) {
         decideCnt.push(value);
         dates.push(key);
       }
 
-      const increasedDecide = decideCnt[totalNum-1] - decideCnt[totalNum-2];
-      const increasedExam = examCnt[totalNum-1] - examCnt[totalNum-2];
-      const increasedClear = clearCnt[totalNum-1] - clearCnt[totalNum-2];
-      const increasedDeath = deathCnt[totalNum-1] - deathCnt[totalNum-2];
+      /*가장 최근 데이터의 증가수*/
+      let increasedDecide = decideCnt[totalNum-1] - decideCnt[totalNum-2];
+      let increasedExam = examCnt[totalNum-1] - examCnt[totalNum-2];
+      let increasedClear = clearCnt[totalNum-1] - clearCnt[totalNum-2];
+      let increasedDeath = deathCnt[totalNum-1] - deathCnt[totalNum-2];
 
+      /*가장 최근 데이터의 증가수에 따른 화살표 종류*/
       const arrowDecide = increasedDecide  == 0 ? dash : (increasedDecide > 0 ? upArrow : downArrow);
       const arrowExam = increasedExam  == 0 ? dash : (increasedExam > 0 ? upArrow : downArrow);
       const arrowClear = increasedClear == 0 ? dash : (increasedClear > 0 ? upArrow : downArrow);
       const arrowDeath = increasedDeath == 0 ? dash : (increasedDeath > 0 ? upArrow : downArrow);
 
+      /*출력할 때는 부호없이 출력*/
+      increasedDecide = Math.abs(increasedDecide);
+      increasedExam = Math.abs(increasedExam);
+      increasedClear = Math.abs(increasedClear);
+      increasedDeath = Math.abs(increasedDeath);
+
+      /*가장 최근 데이터의 날짜*/
       const todayDate = dates[totalNum-1];
-      <!-- const todayDate = new Date(todayDateString.substr(0,4), todayDateString.substr(4,2)-1, todayDateString.substr(6,2)); -->
     %>
   <div class="corona-container">
     <h3>COVID-19 국내 상황</h3>
@@ -125,24 +169,19 @@
     let backgroundColors = [];
     let borderColors = [];
   <%
-
-      i = 0;
+    i = 0;
     for (const [key, value] of Object.entries(decideCnt_coronaObj)) {
       if (i > 0) {
     %>
-
-          dates.push(<%=key %>);
+        dates.push("<%=key.substr(5)%>");
         increased.push(<%=decideCnt[i] %> - <%=decideCnt[i - 1] %>);
         backgroundColors.push('rgb(255, 99, 132,0.2)');
         borderColors.push('rgba(255,99,132,1)');
-      
       <%}
       ++i;
     }
   %>
-
     var ctx = document.getElementById("myChart").getContext('2d');
-
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -168,5 +207,4 @@
     });
   </script>
   </body>
-
   </html>
