@@ -23,9 +23,7 @@ app.use(
             "default-src": ["'self'"],
             "connect-src": [
                 "'self'",
-                "https://ka-f.fontawesome.com/releases/v5.15.1/css/free-v4-font-face.min.css 'unsafe-inline'",
-                "https://ka-f.fontawesome.com/releases/v5.15.1/css/free.min.css 'unsafe-inline'",
-                "https://ka-f.fontawesome.com/releases/v5.15.1/css/free-v4-shims.min.css 'unsafe-inline'",
+                "https://ka-f.fontawesome.com 'unsafe-inline'",
                 "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson",
             ],
             "script-src": [
@@ -36,9 +34,8 @@ app.use(
                 "http://openapi.data.go.kr/",
             ],
             "font-src": [
-                "https://ka-f.fontawesome.com/releases/v5.15.1/css/ 'unsafe-inline'",
+                "https://ka-f.fontawesome.com 'unsafe-inline'",
                 "https://fonts.gstatic.com/ 'unsafe-inline'",
-                "https://ka-f.fontawesome.com/releases/v5.15.1/webfonts/ 'unsafe-inline'",
             ],
             "style-src": ["'self' 'unsafe-inline'"],
             "style-src-elem": ["'self'", "https://fonts.googleapis.com/ 'unsafe-inline'"],
