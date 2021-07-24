@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Res } from '@nestjs/common';
 // import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
-import { User } from './domain/User';
+import { User } from './domain/user.entity';
+import { UserSaveRequestDto, UserSaveResponseDto } from './dto/saveUser.dto';
 
 @Controller('user')
 export class UserController {
@@ -30,10 +31,16 @@ export class UserController {
     }
 
     @Post('save')
-    async saveUser(@Body() user: User): Promise<string> {
+    async saveUser(@Body() saveRequestDto: UserSaveRequestDto): Promise<string> {
+        console.log(saveRequestDto);
+
+        const user = UserSaveRequestDto.toEntity(saveRequestDto);
         await this.userService.saveUser(user);
+
+        const foundUser = await this.userService.findOne(saveRequestDto.userId);
+
         return Object.assign({
-            data: { ...user },
+            data: { ...UserSaveResponseDto.fromEntity(foundUser) },
             statusCode: 201,
             statusMsg: `saved successfully`,
         });
