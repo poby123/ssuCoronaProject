@@ -7,7 +7,8 @@ import { User } from './user/domain/user.entity';
 import { UserModule } from './user/user.module';
 import { TemperatureModule } from './temperature/temperature.module';
 import { Temperature } from './temperature/domain/temperature.entity';
-
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './exceptions/http-exception.filter';
 @Module({
   imports: [
     TypeOrmModule.forRoot(
@@ -27,6 +28,6 @@ import { Temperature } from './temperature/domain/temperature.entity';
     TemperatureModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_FILTER, useClass: HttpExceptionFilter }]
 })
 export class AppModule { }

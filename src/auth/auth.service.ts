@@ -3,7 +3,7 @@ import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   async validateUser(id: string, pass: string): Promise<any> {
     const user = await this.userService.findOne(id);

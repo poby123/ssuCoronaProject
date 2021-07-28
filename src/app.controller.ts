@@ -1,28 +1,24 @@
-import { Controller, Get, Render, Post, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Render, Post, UseGuards, Request, UseFilters } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthGuard } from '@nestjs/passport';
-import { User } from './user/domain/user.entity';
-import { LocalAuthGuard } from './auth/local-auth.guard';
+import { SessionGuard } from './auth/session.guard';
+import { ViewAuthFilter } from './exceptions/fobidden-view-exception.filter';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Get()
+  @UseGuards(SessionGuard)
+  @UseFilters(ViewAuthFilter)
   @Render('index')
-  index(): object {
-    return { message: 'Hello world!' }
+  index(@Request() req): object {
+    console.log(req.session.userId);
+  
+    return { title: 'SSU Corona Project' }
   }
-
 
   @Get('/hello')
   getHello(): string {
     return this.appService.getHello();
-  }
-
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/signin')
-  async login(@Request() req) {
-    return req.user;
   }
 }

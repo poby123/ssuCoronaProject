@@ -1,0 +1,39 @@
+{{> header}}
+<section class="login">
+  <div class="login-container">
+    <h3 class="title">Admin Sign in</h3>
+    <h3><i class="fas fa-user"></i></h3>
+    <div>
+      <form id="loginForm">
+        <input type="text" name="username" id="name" placeholder="아이디"><br>
+        <input type="password" name="password" id="password" placeholder="비밀번호"><br>
+        <button onclick="loginFormAction(); return false;" id="loginButton">LOGIN</button>
+      </form>
+    </div>
+  </div>
+</section>
+{{> footer}}
+<script type="text/javascript">
+  $('.menu-bar').hide();
+  
+  function loginFormAction() {
+    let id = $('#name').val();
+    let password = $('#password').val();
+    const targetObject = { id, password };
+    $.ajax({
+      url: '/auth/signin',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(targetObject),
+      dataType: 'json',
+      success: (result) => {
+        location.replace('/');
+      }, 
+      error : (e) => {
+        alert('잘못된 아이디 또는 비밀번호입니다.');
+      }
+    });
+  }
+</script>
+</body>
+</html>
