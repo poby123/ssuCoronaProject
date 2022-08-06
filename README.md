@@ -13,4 +13,4 @@
 | /rest/user/identify | GET | nfcid=id | nfcid에 해당하는 사용자 정보가 있는지 확인.|
 | /rest/user/all | GET | - | 체온 정보를 포함한 모든 사용자 정보 확인.|
 | /rest/user/withouttemp | GET | - | 체온 정보를 제외한 모든 사용자 정보 확인.|
-| /rest/user/addTempData | GET | nfcid=id&temperature=temp | 체온 저장|
+| /rest/addTempData | GET | nfcid=id&temperature=temp | 체온 저장|
